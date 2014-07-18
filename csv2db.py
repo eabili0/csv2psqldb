@@ -26,7 +26,7 @@ def getInsertCommand(first_row, table_name):
 
 def toDB(file_path, server_name, db_name, table_name, user, password):
 
-	folder, file = os.path.split(file_path)[0]
+	folder, file = os.path.split(file_path)
 	with Util.cd(folder):
 		reader = UnicodeReader(open(file,'rb'))
 		db = Database(db_name, user, server_name, 5432, password)
