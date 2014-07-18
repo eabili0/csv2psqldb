@@ -24,12 +24,12 @@ def getInsertCommand(first_row, table_name):
 	# return "INSERT into assert." + table_name + " " + fields + " VALUES " + values
 	return (fields, values)
 
-def toDB(file_path, db_name, table_name, user, password):
+def toDB(file_path, server_name, db_name, table_name, user, password):
 
 	folder, file = os.path.split(file_path)[0]
 	with Util.cd(folder):
 		reader = UnicodeReader(open(file,'rb'))
-		db = Database(db_name, user, 'godot.cs.ucdavis.edu', 5432, password)
+		db = Database(db_name, user, server_name, 5432, password)
 		fields, values = getInsertCommand(reader.next(), table_name)
 
 		print 'running...'
@@ -57,15 +57,15 @@ def toDB(file_path, db_name, table_name, user, password):
 
 def main():
 
-  if len(sys.argv) < 6:
-    print "wrong format\ncsv2db.py file_path db_name table_name user password"
+  if len(sys.argv) < 7:
+    print "wrong format\ncsv2db.py file_path server_name db_name table_name user password"
     sys.exit()
 
   if not os.path.isfile(sys.argv[1]):
     print("!! %s not a valid file" % sys.argv[1])
     sys.exit()
 
-  toDB(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
+  toDB(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6])
 
 if __name__ == "__main__":
 	main()
