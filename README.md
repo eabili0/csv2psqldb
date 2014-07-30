@@ -1,8 +1,12 @@
 csv2psqldb
 ==========
 
-Small project to deploy a .csv file to a PostgreSQL DB.
+Small project to efficiently deploy a .csv file to a PostgreSQL DB.
 
 From the command line:
 
-ptyhon csv2db.py \< csv file path \> \< server name \> \< db name \> \< table name \> \< user \> \< password \>
+```
+<source path>$: python csv2db <csv file path> <server> <db> <table> <user> <password>
+```
+
+*Obs: it takes the table structure from the .csv file; basically meaning that the collumn names `MUST` be present in the first line*
