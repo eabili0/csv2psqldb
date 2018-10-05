@@ -24,13 +24,14 @@ def getInsertCommand(first_row, table_name):
 	# return "INSERT into assert." + table_name + " " + fields + " VALUES " + values
 	return (fields, values)
 
-def toDB(file_path, server_name, db_name, table_name, user, password):
+def toDB(file_path, server_name, db_name, table_name, user, password, csv_delimiter):
 
 	folder, file = os.path.split(file_path)
 	with Util.cd(folder):
 		reader = UnicodeReader(open(file,'rb'))
 		db = Database(db_name, user, server_name, 5432, password)
-		fields, values = getInsertCommand(reader.next()[0].split(','), table_name)
+		csv_delimiter = csv_delimiter if csv_delimiter != "" else ";"
+		fields, values = getInsertCommand(reader.next()[0].split(csv_delimiter), table_name)
 
 		print 'running...'
 		v = []
@@ -58,14 +59,14 @@ def toDB(file_path, server_name, db_name, table_name, user, password):
 def main():
 
   if len(sys.argv) < 7:
-    print "wrong format\ncsv2db.py file_path server_name db_name table_name user password"
+    print "wrong format\ncsv2db.py file_path server_name db_name table_name user password delimiter"
     sys.exit()
 
   if not os.path.isfile(sys.argv[1]):
     print("!! %s not a valid file" % sys.argv[1])
     sys.exit()
 
-  toDB(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6])
+  toDB(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7])
 
 if __name__ == "__main__":
 	main()
