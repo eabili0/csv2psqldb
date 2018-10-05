@@ -30,13 +30,13 @@ def toDB(file_path, server_name, db_name, table_name, user, password):
 	with Util.cd(folder):
 		reader = UnicodeReader(open(file,'rb'))
 		db = Database(db_name, user, server_name, 5432, password)
-		fields, values = getInsertCommand(reader.next(), table_name)
+		fields, values = getInsertCommand(reader.next()[0].split(','), table_name)
 
 		print 'running...'
 		v = []
 		while True:
 			try:
-				row = reader.next()
+				row = reader.next()[0].split(',')
 			except Exception:
 				break;
 
